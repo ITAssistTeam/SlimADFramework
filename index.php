@@ -1,5 +1,25 @@
 <?php
 
+/* This API was written for IT Assist Team 
+   www.itassistteam.com
+   
+   This API uses the Slim framework(http://www.slimframework.com/) as a basis using composer
+   to manage dependencies.
+   
+   This also uses a custom PDO management library that is not included as it is not currently open
+   for public use.  You will need to replace it where necessary with your own library.
+
+*/
+
+
+
+
+
+
+
+
+
+
 session_start();
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
@@ -13,7 +33,9 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 require 'vendor/autoload.php';
 
-require 'library/DBLibSA.php';
+/*  This was a library built to use a static database configuration in /library
+*   It uses PHP PDO library as a basis.
+*/
 require 'library/DBLib.php';
 require 'library/LDapConfig.php';
 
@@ -95,7 +117,6 @@ class CheckLogin
 				foreach($groups as $key => $v){
 					if(in_array($v,$this->GroupsCheck)){
 						$InGroup = true;
-					
 					}
 				}
 				// User not in group associated with this route
@@ -139,6 +160,7 @@ $app->post('/login', function (Request $request, Response $response) {
 
     $adServer = $domainlong;
 	
+	//instance LDap adapter
     $ldap = ldap_connect($adServer);
     $username = $allPostPutVars['username'];
     $password = $allPostPutVars['password'];
@@ -150,7 +172,7 @@ $app->post('/login', function (Request $request, Response $response) {
 
     $bind = @ldap_bind($ldap, $ldaprdn, $password);
 	
-	 //$response->getBody()->write("Username: " .$username);
+	
 
 	try{
 		//check if successfully bound ldap protocol
@@ -227,22 +249,21 @@ $app->post('/login', function (Request $request, Response $response) {
 			@ldap_close($ldap);
 		} else {
 			  $response->getBody()->write("{ 'bSuccess' : false, 'sErrorMsg' : 'Invalid email address / password' }");
-			
 		}
 		
 		}catch(Exception $e){
 			   $response->getBody()->write("{ 'bSuccess' : false, 'sErrorMsg' : 'Invalid email address / password' }");
-			
-			
 		}
 	
 	return $response; 
 });
 
+
+//verifies that the user is still logged in by utilizying the login handler
 $app->get('/CheckLogin', function (Request $request, Response $response) {
 	   echo '{"bSuccess" : true }';
-    }
-)->add(new CheckLogin(array("CasePropertyArchives")));
+}
+)->add(new CheckLogin());
 
 /**
  * Step 4: Run the Slim application
