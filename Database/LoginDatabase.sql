@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `logindb` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `logindb`;
--- MySQL dump 10.13  Distrib 5.7.10, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
--- Host: localhost    Database: logindb
+-- Host: 127.0.0.1    Database: logindb
 -- ------------------------------------------------------
--- Server version	5.7.10
+-- Server version	5.6.17
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -18,41 +18,22 @@ USE `logindb`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `Logins`
+-- Dumping data for table `logins`
 --
 
-DROP TABLE IF EXISTS `Logins`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Logins` (
-  `LoginID` int(11) NOT NULL AUTO_INCREMENT,
-  `UserID` int(11) DEFAULT NULL,
-  `LoginTime` datetime DEFAULT NULL,
-  `UserGroups` text,
-  `Extension` varchar(45) DEFAULT NULL,
-  `Archived` int(1) DEFAULT '0',
-  `LastActive` datetime DEFAULT NULL,
-  PRIMARY KEY (`LoginID`)
-) ENGINE=InnoDB AUTO_INCREMENT=334 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `logins` WRITE;
+/*!40000 ALTER TABLE `logins` DISABLE KEYS */;
+/*!40000 ALTER TABLE `logins` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Table structure for table `Users`
+-- Dumping data for table `users`
 --
 
-DROP TABLE IF EXISTS `Users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Users` (
-  `UserID` int(11) NOT NULL AUTO_INCREMENT,
-  `Username` varchar(45) DEFAULT NULL,
-  `FirstName` varchar(45) DEFAULT NULL,
-  `LastName` varchar(45) DEFAULT NULL,
-  `Archived` bit(1) DEFAULT b'0',
-  `SysAdmin` int(1) DEFAULT '0',
-  PRIMARY KEY (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Dumping routines for database 'logindb'
@@ -234,4 +215,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-21 15:45:36
+-- Dump completed on 2016-01-22 15:34:18
