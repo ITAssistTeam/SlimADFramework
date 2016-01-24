@@ -8,6 +8,11 @@
    
    This also uses a custom PDO management library that is not included as it is not currently open
    for public use.  You will need to replace it where necessary with your own library.
+   
+   With this library you can specify an array at the end of each route containing string values
+   that specify which group a user must be a part of or leave it blank if it only requires authentication.
+   For example at the end of a route add ->add(new CheckLogin()); for no groups or add(new CheckLogin(array("Admin")));
+   to require the administrative group.
 
 */
 
