@@ -12,14 +12,6 @@
 */
 
 
-
-
-
-
-
-
-
-
 session_start();
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
@@ -101,8 +93,6 @@ class CheckLogin
 			$results = DBLib::GetRow($query, $params);
 			$groups =  json_decode($results['aResultData']['UserGroups']);
 			if($results['bSuccess'] == false || !isset($results['aResultData']['LoginID'])){
-				//bad login
-				//$app->redirect("/login.html");
 				$newResponse = $response->withStatus(401);
 				$newResponse->getBody()->write('Requires Authentication1');
 				return $newResponse;
@@ -234,7 +224,6 @@ $app->post('/login', function (Request $request, Response $response) {
 						$response->getBody()->write("{ 'bSuccess' : false, 'sErrorMsg' : 'User Not in group.  Please check with your administrator to have your login added to group $groupName, on domain $domainshort'}");
 					}else{
 						$_SESSION["login_id"] =  $results['aResultData']['loginid'];
-				
 						$response->getBody()->write(json_encode($results));
 					}
 				
