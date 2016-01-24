@@ -1,7 +1,7 @@
 <?php
 
-/* This API was written for IT Assist Team 
-   www.itassistteam.com
+/* Project Name: Auth Framework
+   Website: http://www.itassistteam.com
    
    This API uses the Slim framework(http://www.slimframework.com/) as a basis using composer
    to manage dependencies.
@@ -88,14 +88,15 @@ class CheckLogin
      */
     public function __invoke($request, $response, $next)
     {
-       	//Check if session login_id is set.  This is set in the /login route
+       	//Check if session login_id is set.  This is set in the /login route.  
 		if(isset($_SESSION["login_id"])) {
 			$query = "CALL CheckLogin(:loginid);";
 			$params = array(
 				":loginid" => $_SESSION["login_id"]
 			);
-			
 			$results = DBLib::GetRow($query, $params);
+			
+			//Retrieve groups from logins table that were returned
 			$groups =  json_decode($results['aResultData']['UserGroups']);
 			if($results['bSuccess'] == false || !isset($results['aResultData']['LoginID'])){
 				$newResponse = $response->withStatus(401);
@@ -114,7 +115,7 @@ class CheckLogin
 						$InGroup = true;
 					}
 				}
-				// User not in group associated with this route
+				//Handle user not in a group associated with this route
 				if(!$InGroup){
 					$newResponse = $response->withStatus(401);
 					$newResponse->getBody()->write('Requires Group Membership');
@@ -164,7 +165,7 @@ $app->post('/login', function (Request $request, Response $response) {
 
     ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
     ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
-
+	//Bind, if this fails, then user was not authenticated.
     $bind = @ldap_bind($ldap, $ldaprdn, $password);
 	
 	
@@ -202,7 +203,7 @@ $app->post('/login', function (Request $request, Response $response) {
 				if(isset($info[0]['telephonenumber'][0])){
 					$extension = $info[0]['telephonenumber'][0];
 				}
-				
+				//Check if valid user.  If they have not signed in before, a new user entry will be created in table.
 				$query = "CALL CheckUser(:username, :firstname, :lastname, :usergroups, :extension);";
 				$params = array(
 					":username" => $username,
